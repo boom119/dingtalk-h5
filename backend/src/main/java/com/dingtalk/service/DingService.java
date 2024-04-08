@@ -11,17 +11,20 @@ import java.util.Map;
 
 public interface DingService {
 
-    List<Department> getDepartMentList(Long dePartmentId);
-
-    List<User> getUserList(Long dePartmentId);
-
-    List<Role> getRoleList();
 
     OapiRoleListResponse getDTRoleList();
 
-    OapiV2DepartmentListsubResponse getDTDepartMent(Department department);
+    OapiV2DepartmentListsubResponse getDTDepartMent(String department);
 
-    OapiV2UserListResponse getDTUserList(Department department);
+    OapiV2UserListResponse getDTUserList(String department);
+
+    void sync();
+
+    List<Department> getDepartMentList(String dePartmentId);
+
+    List<User> getUserList(String dePartmentId);
+
+    List<Role> getRoleList();
 }
 
 

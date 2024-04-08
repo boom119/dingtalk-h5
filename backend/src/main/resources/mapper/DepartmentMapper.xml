@@ -1,0 +1,13 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dingtalk.mapper.DepartmentMapper">
+
+    <insert id="batchInsert">
+        INSERT INTO c_department (department_id,parent_id,department_name )
+        VALUES
+        <foreach collection="departments" item="department" separator=",">
+            (#{department.departmentId}, #{department.parentId},#{department.departmentName})
+        </foreach>
+    </insert>
+
+</mapper>

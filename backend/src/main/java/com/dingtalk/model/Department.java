@@ -15,15 +15,10 @@ import java.util.Date;
 @Getter
 public class Department {
 
-    private Long department_id;
+    private String departmentId;
 
-    private Long parent_id;
+    private String parentId;
 
-    private String department_name;
+    private String departmentName;
 
-//    private Long order;
-
-//    private Date create_time;
-
-//    private Date update_time;
 }

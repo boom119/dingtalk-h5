@@ -4,17 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
+/**
+ * @author OpenTheDoor
+ * @version 1.0
+ * @date 2024/4/8 21:28
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
+public class UserRole {
     private String userId;
-    private String username;
-    private String email;
-    private String mobile;
-    private String avatar;
-    private String status;
+    private String roleId;
 }
