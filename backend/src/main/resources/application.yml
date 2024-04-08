@@ -1,0 +1,30 @@
+server:
+  port: 8080
+spring:
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    platform: h2
+    schema: classpath:sql/schema.sql
+    data: classpath:sql/data.sql
+
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+
+
+logging:
+  level:
+    root: INFO
+
+dingtalk:
+  app_key: dingq87y6ea5ydh9lepl
+  app_secret: H4oJrL21_rd-UkfXONTh1CcFUm0qxLPs91QYJyKyDBJm6sRzPLOb0QvGaHU7dOHR
+  corp_id: dingeca80627ed9718e0bc961a6cb783455b
+  agent_id: 2995946851
