@@ -10,4 +10,31 @@
         </foreach>
     </insert>
 
+    <insert id="insertUserDepartment" parameterType="UserDepartment">
+        INSERT INTO c_user_department (user_id, department_id, is_leader)
+        VALUES (#{userId}, #{departmentId}, #{isLeader})
+    </insert>
+
+    <delete id="deleteUserDepartment">
+        DELETE FROM c_user_department
+        WHERE user_id = #{userId} AND department_id = #{departmentId}
+    </delete>
+
+    <update id="updateUserDepartment" parameterType="UserDepartment">
+        UPDATE c_user_department
+        SET
+            is_leader = #{isLeader}
+        WHERE user_id = #{userId}
+          AND department_id = #{departmentId}
+    </update>
+
+    <select id="selectUserDepartment" resultType="UserDepartment">
+        SELECT * FROM c_user_department
+        WHERE user_id = #{userId} AND department_id = #{departmentId}
+    </select>
+
+    <select id="selectUserDepartmentAll" resultType="UserDepartment">
+        SELECT * FROM c_user_department
+    </select>
+
 </mapper>

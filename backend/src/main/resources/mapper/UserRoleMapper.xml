@@ -10,4 +10,29 @@
         </foreach>
     </insert>
 
+    <insert id="insertUserRole" parameterType="UserRole">
+        INSERT INTO c_user_role (user_id, role_id)
+        VALUES (#{userId}, #{roleId})
+    </insert>
+
+    <delete id="deleteUserRole">
+        DELETE FROM c_user_role
+        WHERE user_id = #{userId} AND role_id = #{roleId}
+    </delete>
+
+    <update id="updateUserRole" parameterType="UserRole">
+        UPDATE c_user_role
+        SET user_id = #{userId},
+            role_id = #{roleId}
+    </update>
+
+    <select id="selectUserRole" resultType="UserRole">
+        SELECT * FROM c_user_role
+        WHERE user_id = #{userId} AND role_id = #{roleId}
+    </select>
+
+    <select id="selectUserRoleAll" resultType="UserRole">
+        SELECT * FROM c_user_role
+    </select>
+
 </mapper>

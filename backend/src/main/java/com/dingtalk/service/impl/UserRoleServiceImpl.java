@@ -19,8 +19,35 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Autowired
     private UserRoleMapper userRoleMapper;
 
-    @Transactional
+
     public void batchInsertUserRoles(List<UserRole> userRoles) {
         userRoleMapper.batchInsert(userRoles);
     }
+
+    @Override
+    public int insertUserRole(UserRole userRole) {
+        return userRoleMapper.insertUserRole(userRole);
+    }
+
+    @Override
+    public int deleteUserRole(String userId, String roleId) {
+        return userRoleMapper.deleteUserRole(userId,roleId);
+    }
+
+    @Override
+    public int updateUserRole(UserRole userRole) {
+        return userRoleMapper.updateUserRole(userRole);
+    }
+
+    @Override
+    public UserRole selectUserRole(String userId, String roleId) {
+        return userRoleMapper.selectUserRole(userId,roleId);
+    }
+
+    @Override
+    public List<UserRole> selectUserRoleAll() {
+        return userRoleMapper.selectUserRoleAll();
+    }
+
+
 }

@@ -16,4 +16,10 @@ import java.util.List;
 public interface UserDepartmentMapper {
 
     void batchInsert(@Param("userDepartments") List<UserDepartment> userDepartments);
+
+    int insertUserDepartment(UserDepartment userDepartment);
+    int deleteUserDepartment(@Param("userId") String userId, @Param("departmentId") String departmentId);
+    int updateUserDepartment(UserDepartment userDepartment);
+    List<UserDepartment> selectUserDepartmentAll();
+    UserDepartment selectUserDepartment(@Param("userId") String userId, @Param("departmentId") String departmentId);
 }

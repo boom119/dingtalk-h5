@@ -10,4 +10,45 @@
         </foreach>
     </insert>
 
+    <insert id="insertRole" parameterType="Role">
+        INSERT INTO c_role (role_id, role_name, role_group_id, role_group_name)
+        VALUES (#{roleId}, #{roleName}, #{roleGroupId}, #{roleGroupName})
+    </insert>
+
+    <delete id="deleteRoleById" parameterType="String">
+        DELETE FROM c_role WHERE role_id = #{roleId}
+    </delete>
+
+    <update id="updateRole" parameterType="com.dingtalk.model.Role">
+        UPDATE c_role
+        SET
+            role_name = #{roleName},
+            role_group_id = #{roleGroupId},
+            role_group_name = #{roleGroupName}
+        WHERE role_id = #{roleId}
+    </update>
+
+    <select id="selectRoleById" parameterType="String" resultType="Role">
+        SELECT * FROM c_role WHERE role_id = #{roleId}
+    </select>
+
+    <select id="selectAllRoles" resultType="com.dingtalk.model.Role">
+        SELECT * FROM c_role
+    </select>
+
+    <!-- 分页和条件查询 -->
+    <select id="selectRolesByCondition" parameterType="map" resultType="Role">
+        SELECT * FROM c_role
+        <where>
+            <if test="roleName != null and roleName.trim() != ''">
+                AND role_name LIKE CONCAT('%', #{roleName}, '%')
+            </if>
+            <if test="roleGroupId != null and roleGroupId.trim() != ''">
+                AND role_group_id = #{roleGroupId}
+            </if>
+        </where>
+        ORDER BY role_id
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
 </mapper>

@@ -1,8 +1,6 @@
 package com.dingtalk.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * @author OpenTheDoor
@@ -12,6 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
+@Getter
+@EqualsAndHashCode
 public class UserRole {
     private String userId;
     private String roleId;

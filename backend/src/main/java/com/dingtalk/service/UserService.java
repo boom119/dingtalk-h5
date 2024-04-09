@@ -12,4 +12,10 @@ import java.util.List;
  */
 public interface UserService {
     void batchInsertUsers(List<User> users);
+    void insertUser(User user);
+    void deleteUserById(String userId);
+    void updateUser(User user);
+    User selectUserById(String userId);
+    List<User> selectAllUsers();
+    List<User> selectUsersByStatus(Byte status);
 }

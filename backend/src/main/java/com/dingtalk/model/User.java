@@ -1,14 +1,15 @@
 package com.dingtalk.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
+@Getter
+@EqualsAndHashCode
 public class User {
 
     private String userId;
@@ -17,4 +18,6 @@ public class User {
     private String mobile;
     private String avatar;
     private String status;
+
+
 }

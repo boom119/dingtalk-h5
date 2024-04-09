@@ -2,6 +2,7 @@ package com.dingtalk.service;
 
 import com.dingtalk.model.User;
 import com.dingtalk.model.UserDepartment;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,4 +13,11 @@ import java.util.List;
  */
 public interface UserDepartmentService {
     void batchInsertUserDepartments(List<UserDepartment> userDepartments);
+
+    int insertUserDepartment(UserDepartment userDepartment);
+    int deleteUserDepartment(@Param("userId") String userId, @Param("departmentId") String departmentId);
+    int updateUserDepartment(UserDepartment userDepartment);
+
+    List<UserDepartment> selectUserDepartmentAll();
+    UserDepartment selectUserDepartment(@Param("userId") String userId, @Param("departmentId") String departmentId);
 }

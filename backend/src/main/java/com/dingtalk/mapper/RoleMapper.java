@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author OpenTheDoor
@@ -15,4 +16,11 @@ import java.util.List;
 public interface RoleMapper {
 
     void batchInsert(@Param("roles") List<Role> roles);
+
+    void insertRole(Role role);
+    void deleteRoleById(@Param("roleId") String roleId);
+    void updateRole(Role role);
+    Role selectRoleById(@Param("roleId") String roleId);
+    List<Role> selectAllRoles();
+    List<Role> selectRolesByCondition(Map<String, Object> params);
 }

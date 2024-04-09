@@ -10,4 +10,44 @@
         </foreach>
     </insert>
 
+    <insert id="insertDepartment" parameterType="Department">
+        INSERT INTO c_department (department_id, parent_id, department_name)
+        VALUES (#{departmentId}, #{parentId}, #{departmentName})
+    </insert>
+
+    <delete id="deleteDepartmentById" parameterType="String">
+        DELETE FROM c_department WHERE department_id = #{departmentId}
+    </delete>
+
+    <update id="updateDepartment" parameterType="Department">
+        UPDATE c_department
+        SET
+            parent_id = #{parentId},
+            department_name = #{departmentName}
+        WHERE department_id = #{departmentId}
+    </update>
+
+    <select id="selectDepartmentById" parameterType="String" resultType="Department">
+        SELECT * FROM c_department WHERE department_id = #{departmentId}
+    </select>
+
+    <select id="selectAllDepartments" resultType="Department">
+        SELECT * FROM c_department
+    </select>
+
+    <!-- 分页和条件查询 -->
+    <select id="selectDepartmentsByCondition" parameterType="map" resultType="Department">
+        SELECT * FROM c_department
+        <where>
+            <if test="departmentName != null and departmentName.trim() != ''">
+                AND department_name LIKE CONCAT('%', #{departmentName}, '%')
+            </if>
+            <if test="parentId != null">
+                AND parent_id = #{parentId}
+            </if>
+        </where>
+        ORDER BY department_id
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
 </mapper>

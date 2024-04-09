@@ -13,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Setter
 @Getter
+@EqualsAndHashCode
 public class Department {
 
     private String departmentId;

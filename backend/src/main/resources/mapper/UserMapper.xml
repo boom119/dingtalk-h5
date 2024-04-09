@@ -10,4 +10,50 @@
         </foreach>
     </insert>
 
+    <insert id="insertUser" parameterType="User">
+        INSERT INTO c_user (user_id, username, email, mobile, avatar,status)
+        VALUES (#{userId}, #{username}, #{email}, #{mobile}, #{avatar}, #{status})
+    </insert>
+
+    <delete id="deleteUserById" parameterType="String">
+        DELETE FROM c_user WHERE user_id = #{userId}
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE c_user
+        SET
+            username = #{username},
+            email = #{email},
+            mobile = #{mobile},
+            avatar = #{avatar},
+            status = #{status}
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="selectUserById" parameterType="String" resultType="User">
+        SELECT * FROM c_user WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectAllUsers" resultType="User">
+        SELECT * FROM c_user
+    </select>
+
+    <select id="selectUsersByStatus" resultType="User">
+        SELECT * FROM c_user WHERE status = #{status}
+    </select>
+
+    <select id="selectUserByCondition" parameterType="map" resultType="User">
+        SELECT * FROM c_user
+        <where>
+            <if test="username != null and username.trim() != ''">
+                AND username = #{username}
+            </if>
+            <if test="email != null and email.trim() != ''">
+                AND email = #{email}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
 </mapper>
