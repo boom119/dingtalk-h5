@@ -25,6 +25,9 @@ mybatis:
 logging:
   level:
     root: INFO
+pagehelper:
+  helper-dialect: mysql
+
 
 dingtalk:
   app_key: dingq87y6ea5ydh9lepl
