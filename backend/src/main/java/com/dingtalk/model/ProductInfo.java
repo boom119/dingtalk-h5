@@ -7,12 +7,13 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 public class ProductInfo {
 
     private Integer productId;
-    private Integer categoryId;
+    private String categoryIds;
     private String productCode;
     private String productName;
     private String modelNumber;
@@ -31,6 +32,7 @@ public class ProductInfo {
     private String notes;
     private String mainImage;
     private String files;
+    private List<ProductCategory> productCategorieList;
 
     // Getters and setters for all properties
     // Ensure to generate them using your IDE or write them manually

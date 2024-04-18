@@ -8,10 +8,12 @@ package com.dingtalk.model.dto;
 import cn.hutool.db.Page;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ProductInfoQueryDTO {
     private String productCode;
     private String productName;
     private Page page;
-//    private String category;
+    private List<String> categoryIds;
 }

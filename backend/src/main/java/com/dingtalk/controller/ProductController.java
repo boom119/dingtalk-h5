@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/product")
 public class ProductController {
 
-    @Autowired
-    private ProductInfoService productInfoService;
+    private final ProductInfoService productInfoService;
+
+    public ProductController(ProductInfoService productInfoService) {
+        this.productInfoService = productInfoService;
+    }
 
     @PostMapping("/page")
     public PageInfo<ProductInfo> getProductInfos(@RequestBody ProductInfoQueryDTO queryDTO) {

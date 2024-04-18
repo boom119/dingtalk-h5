@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dingtalk.mapper.productInfoMapper">
+<mapper namespace="com.dingtalk.mapper.ProductInfoMapper">
 
-    <resultMap id="productInfoMap" type="ProductInfo">
+    <resultMap id="productInfoMap" type="com.dingtalk.model.ProductInfo">
         <id column="product_id" property="productId" />
-        <result column="category_id" property="categoryId" />
+        <result column="category_ids" property="categoryIds" />
         <result column="product_code" property="productCode" />
         <result column="product_name" property="productName" />
         <result column="model_number" property="modelNumber" />
@@ -29,8 +29,10 @@
     <!-- Assumes a type alias 'ProductInfoQueryDTO' is defined for the query DTO class -->
     <!-- This select statement skips pagination -->
     <select id="selectProductInfoByPage" resultMap="productInfoMap" parameterType="com.dingtalk.model.dto.ProductInfoQueryDTO">
-        SELECT product_id,category_id,product_code,product_name,model_number,voltage,power_kw,production,other_parameters,dimensions_mm,weight_kg,packaging_size_mm,
-               total_weight_kg,dealer_price,distribution_price,factory_price,distribution_price,factory_price,update_time,notes,main_image,files FROM product_info
+        SELECT
+        product_id,category_ids,product_code,product_name,model_number,voltage,power_kw,production,other_parameters,dimensions_mm,weight_kg,packaging_size_mm,
+        total_weight_kg,dealer_price,distribution_price,factory_price,distribution_price,factory_price,update_time,notes,main_image,files
+        FROM product_info
         <where>
             <if test="productCode != null">
                 AND product_code = #{productCode}
@@ -38,6 +40,7 @@
             <if test="productName != null">
                 AND product_name = #{productName}
             </if>
+
         </where>
     </select>
 
@@ -46,14 +49,14 @@
     </select>
 
     <insert id="insertProductInfo">
-        INSERT INTO product_info (category_id, product_code, product_name)
-        VALUES (#{categoryId}, #{productCode}, #{productName})
+        INSERT INTO product_info (category_ids, product_code, product_name)
+        VALUES (#{categoryIds}, #{productCode}, #{productName})
         <!-- Include all the other ProductInfo fields -->
     </insert>
 
     <update id="updateProductInfo">
         UPDATE product_info SET
-        category_id = #{categoryId},
+        category_ids = #{categoryIds},
         product_code = #{productCode},
         product_name = #{productName}
         <!-- Include setters for all other ProductInfo fields that could be updated -->

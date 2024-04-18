@@ -16,13 +16,9 @@ import java.util.List;
 public interface ProductInfoMapper {
 
     Page<ProductInfo> selectProductInfoByPage(ProductInfoQueryDTO productInfoQueryDTO);
-
     ProductInfo selectById(Integer id);
-
     int insertProductInfo(ProductInfo productInfo);
-
     int updateProductInfo(ProductInfo productInfo);
-
     int deleteById(Integer id);
 
 }

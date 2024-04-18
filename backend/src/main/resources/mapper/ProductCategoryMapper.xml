@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dingtalk.mapper.ProductCategoryMapper">
+
+    <resultMap id="productCategoryMap" type="com.dingtalk.model.ProductCategory">
+        <result column="category_id" property="categoryId" />
+        <result column="category_name" property="categoryName" />
+        <result column="parent_id" property="parentId" />
+        <result column="level" property="level" />
+    </resultMap>
+
+    <select id="selectAll" resultMap="productCategoryMap">
+        SELECT * FROM product_category
+    </select>
+
+    <select id="selectById" resultMap="productCategoryMap">
+        SELECT * FROM product_category WHERE category_id = #{categoryId}
+    </select>
+
+    <select id="selectByIds" resultMap="productCategoryMap">
+        SELECT * FROM product_category WHERE category_id in (#{categoryIds})
+    </select>
+
+    <select id="selectByParentId" resultMap="productCategoryMap">
+        SELECT * FROM product_category WHERE parent_id = #{parentId}
+    </select>
+
+    <insert id="insertProductCategory" parameterType="com.dingtalk.model.ProductCategory">
+        INSERT INTO product_category (category_id, category_name, parent_id,level)
+        VALUES (#{categoryId}, #{categoryName}, #{parentId},#{level})
+    </insert>
+
+    <update id="updateProductCategory" parameterType="com.dingtalk.model.ProductCategory">
+        UPDATE product_category SET
+        category_id = #{categoryId},
+        category_name = #{categoryName},
+        parent_id = #{parentId},
+        level = #{level}
+        WHERE category_id = #{categoryId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM product_category WHERE category_id = #{categoryId}
+    </delete>
+
+
+
+</mapper>
