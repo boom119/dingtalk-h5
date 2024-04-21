@@ -12,6 +12,7 @@ import java.util.List;
 
 @Data
 public class ProductInfoQueryDTO {
+    private Integer productId;
     private String productCode;
     private String productName;
     private Page page;

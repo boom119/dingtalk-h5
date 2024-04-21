@@ -5,13 +5,10 @@
  */
 package com.dingtalk.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.dingtalk.model.ProductCategory;
-import com.dingtalk.model.ProductInfo;
-import com.dingtalk.model.dto.ProductInfoQueryDTO;
 import com.dingtalk.service.ProductCategoryService;
-import com.dingtalk.service.ProductInfoService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.dingtalk.util.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,12 +24,12 @@ public class ProductCategoryController {
     }
 
     @PostMapping("/getByParentId")
-    public List<ProductCategory> getByParentId(@RequestParam String parentId) {
-        return productCategoryService.selectCategoryByParentId(parentId);
+    public ApiResponse<List<ProductCategory>> getByParentId(@RequestParam(name = "parentId") String parentId) {
+        return ApiResponse.success(productCategoryService.selectCategoryByParentId(parentId));
     }
 
     @PostMapping("/getById")
-    public ProductCategory getById(@RequestParam String id) {
-        return productCategoryService.selectCategoryById(id);
+    public ApiResponse<ProductCategory> getById(@RequestParam(name = "id") String id) {
+        return ApiResponse.success(productCategoryService.selectCategoryById(id));
     }
 }

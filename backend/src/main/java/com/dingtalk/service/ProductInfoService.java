@@ -7,13 +7,14 @@ package com.dingtalk.service;
 
 import com.dingtalk.model.ProductInfo;
 import com.dingtalk.model.dto.ProductInfoQueryDTO;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 public interface ProductInfoService {
 
     PageInfo<ProductInfo> selectProductInfoByPage(ProductInfoQueryDTO queryDTO) ;
+    ProductInfo selectById(Integer id);
+    int insertProductInfo(ProductInfo productInfo);
+    int updateProductInfo(ProductInfo productInfo);
+    int deleteById(Integer id);
 
 }

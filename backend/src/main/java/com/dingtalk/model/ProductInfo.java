@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -28,12 +29,11 @@ public class ProductInfo {
     private BigDecimal dealerPrice;
     private BigDecimal distributionPrice;
     private BigDecimal factoryPrice;
-    private Timestamp updateTime;
+    private LocalDateTime  createTime;
+    private LocalDateTime updateTime;
     private String notes;
     private String mainImage;
     private String files;
     private List<ProductCategory> productCategorieList;
 
-    // Getters and setters for all properties
-    // Ensure to generate them using your IDE or write them manually
 }

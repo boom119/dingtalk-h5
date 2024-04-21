@@ -12,18 +12,18 @@
         <result column="power_kw" property="powerKw" />
         <result column="production" property="production" />
         <result column="other_parameters" property="otherParameters" />
-        <result column="dimensions_mm" property="dimensionsMm" />
-        <result column="weight_kg" property="weightKg" />
+        <result column="dimensions_mm" property="otherParameters" />
+        <result column="weight_kg" property="otherParameters" />
         <result column="packaging_size_mm" property="packagingSizeMm" />
         <result column="total_weight_kg" property="totalWeightKg" />
         <result column="dealer_price" property="dealerPrice" />
         <result column="distribution_price" property="distributionPrice" />
         <result column="factory_price" property="factoryPrice" />
+        <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="notes" property="notes" />
         <result column="main_image" property="mainImage" />
         <result column="files" property="files" />
-        <!-- Add the rest of the mappings corresponding to the ProductInfo class properties -->
     </resultMap>
 
     <!-- Assumes a type alias 'ProductInfoQueryDTO' is defined for the query DTO class -->
@@ -31,14 +31,17 @@
     <select id="selectProductInfoByPage" resultMap="productInfoMap" parameterType="com.dingtalk.model.dto.ProductInfoQueryDTO">
         SELECT
         product_id,category_ids,product_code,product_name,model_number,voltage,power_kw,production,other_parameters,dimensions_mm,weight_kg,packaging_size_mm,
-        total_weight_kg,dealer_price,distribution_price,factory_price,distribution_price,factory_price,update_time,notes,main_image,files
+        total_weight_kg,dealer_price,distribution_price,factory_price,distribution_price,factory_price,create_time,update_time,notes,main_image,files
         FROM product_info
         <where>
+            <if test="productId != null">
+                AND product_id = #{productId}
+            </if>
             <if test="productCode != null">
-                AND product_code = #{productCode}
+                OR product_code = #{productCode}
             </if>
             <if test="productName != null">
-                AND product_name = #{productName}
+                OR product_name = #{productName}
             </if>
 
         </where>
@@ -48,18 +51,33 @@
         SELECT * FROM product_info WHERE product_id = #{id}
     </select>
 
-    <insert id="insertProductInfo">
-        INSERT INTO product_info (category_ids, product_code, product_name)
-        VALUES (#{categoryIds}, #{productCode}, #{productName})
-        <!-- Include all the other ProductInfo fields -->
+    <insert id="insertProductInfo" parameterType="com.dingtalk.model.ProductInfo">
+        INSERT INTO product_info (category_ids,product_code,product_name,model_number,voltage,power_kw,production,other_parameters,dimensions_mm,
+                                  weight_kg,packaging_size_mm,total_weight_kg,dealer_price,distribution_price,factory_price,create_time,update_time,notes)
+        VALUES (#{categoryIds}, #{productCode}, #{productName},#{modelNumber},#{voltage},#{powerKw},#{production},#{otherParameters},#{dimensionsMm},
+                #{weightKg},#{packagingSizeMm},#{totalWeightKg},#{dealerPrice},#{distributionPrice},#{factoryPrice},#{createTime},#{updateTime},#{notes})
     </insert>
 
-    <update id="updateProductInfo">
+    <update id="updateProductInfo" parameterType="com.dingtalk.model.ProductInfo">
         UPDATE product_info SET
         category_ids = #{categoryIds},
         product_code = #{productCode},
-        product_name = #{productName}
-        <!-- Include setters for all other ProductInfo fields that could be updated -->
+        product_name = #{productName},
+        model_number = #{modelNumber},
+        voltage = #{voltage},
+        power_kw = #{powerKw},
+        production = #{production},
+        other_parameters = #{otherParameters},
+        dimensions_mm = #{dimensionsMm},
+        weight_kg = #{weightKg},
+        packaging_size_mm = #{packagingSizeMm},
+        total_weight_kg = #{totalWeightKg},
+        dealer_price = #{dealerPrice},
+        distribution_price = #{distributionPrice},
+        factory_price = #{factoryPrice},
+        create_time = #{createTime},
+        update_time = #{updateTime},
+        notes = #{notes}
         WHERE product_id = #{productId}
     </update>
 

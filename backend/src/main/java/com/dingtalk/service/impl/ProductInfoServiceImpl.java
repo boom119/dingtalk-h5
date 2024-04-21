@@ -16,10 +16,10 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class ProductInfoServiceImpl implements ProductInfoService {
@@ -35,7 +35,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         // 调用 Mapper 方法获取查询及结果
         Page<ProductInfo> productInfoPageInfo = productInfoMapper.selectProductInfoByPage(queryDTO);
         List<ProductInfo> productInfoList = productInfoPageInfo.getResult();
-        if(!ObjectUtil.hasNull(queryDTO.getCategoryIds())){
+        if (!ObjectUtil.hasNull(queryDTO.getCategoryIds())) {
             Set<String> queryCategoryIdsSet = new HashSet<>(queryDTO.getCategoryIds());
             // 筛选出包含参数中任一categoryId的ProductInfo列表
             productInfoList = productInfoList.stream()
@@ -47,6 +47,40 @@ public class ProductInfoServiceImpl implements ProductInfoService {
                     })
                     .collect(Collectors.toList());
         }
+        productInfoList = productUpdateCategory(productInfoList);
+
+        // 返回分页对象，需确保PageInfo中可以接受List<ProductInfo>作为参数
+        return new PageInfo<>(productInfoList);
+    }
+
+    @Override
+    public ProductInfo selectById(Integer id) {
+        ProductInfo productInfo = productInfoMapper.selectById(id);
+        if(!ObjectUtil.isEmpty(productInfo)){
+            productInfo = productUpdateCategory(productInfo);
+        }
+        return productInfo;
+    }
+
+    @Override
+    public int insertProductInfo(ProductInfo productInfo) {
+        productInfo.setCreateTime(LocalDateTime.now());
+        productInfo.setUpdateTime(LocalDateTime.now());
+        return productInfoMapper.insertProductInfo(productInfo);
+    }
+
+    @Override
+    public int updateProductInfo(ProductInfo productInfo) {
+        productInfo.setUpdateTime(LocalDateTime.now());
+        return productInfoMapper.updateProductInfo(productInfo);
+    }
+
+    @Override
+    public int deleteById(Integer id) {
+        return productInfoMapper.deleteById(id);
+    }
+
+    private List<ProductInfo> productUpdateCategory(List<ProductInfo> productInfoList) {
         // 所有产品的类别ID集合
         List<ProductCategory> categoryList = categoryMapper.selectAll();
 
@@ -62,8 +96,26 @@ public class ProductInfoServiceImpl implements ProductInfoService {
                     .collect(Collectors.toList());
             productInfo.setProductCategorieList(productCategories);
         });
-
-        // 返回分页对象，需确保PageInfo中可以接受List<ProductInfo>作为参数
-        return new PageInfo<>(productInfoList);
+        return productInfoList;
     }
+
+    private ProductInfo productUpdateCategory(ProductInfo productInfo) {
+        // 所有产品的类别ID集合
+        List<ProductCategory> categoryList = categoryMapper.selectAll();
+
+        // 将类别列表转换为类别ID到ProductCategory对象的映射，以优化查找性能
+        Map<String, ProductCategory> categoryMap = categoryList.stream()
+                .collect(Collectors.toMap(ProductCategory::getCategoryId, Function.identity()));
+
+
+        List<ProductCategory> productCategories = Arrays.stream(productInfo.getCategoryIds().split(","))
+                .map(categoryMap::get) // 这里利用了之前构建的Id到Category的映射
+                .filter(Objects::nonNull) // 保证不存在的ID不会添加至列表
+                .collect(Collectors.toList());
+        productInfo.setProductCategorieList(productCategories);
+
+        return productInfo;
+    }
+
+
 }
