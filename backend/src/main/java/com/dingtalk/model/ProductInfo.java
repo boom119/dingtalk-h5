@@ -4,9 +4,9 @@ package com.dingtalk.model;
 
 import com.github.pagehelper.PageInfo;
 import lombok.Data;
+import org.apache.ibatis.annotations.Options;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class ProductInfo {
     private LocalDateTime updateTime;
     private String notes;
     private String mainImage;
-    private String files;
-//    private List<ProductCategory> productCategorieList;
+    private List<File> files;
 
 }
+

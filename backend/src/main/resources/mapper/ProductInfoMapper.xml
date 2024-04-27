@@ -23,7 +23,6 @@
         <result column="update_time" property="updateTime" />
         <result column="notes" property="notes" />
         <result column="main_image" property="mainImage" />
-        <result column="files" property="files" />
     </resultMap>
 
     <!-- Assumes a type alias 'ProductInfoQueryDTO' is defined for the query DTO class -->
@@ -31,7 +30,7 @@
     <select id="selectProductInfoByPage" resultMap="productInfoMap" parameterType="com.dingtalk.model.dto.ProductInfoQueryDTO">
         SELECT
         product_id,category_ids,product_code,product_name,model_number,voltage,power_kw,production,other_parameters,dimensions_mm,weight_kg,packaging_size_mm,
-        total_weight_kg,dealer_price,distribution_price,factory_price,distribution_price,factory_price,create_time,update_time,notes,main_image,files
+        total_weight_kg,dealer_price,distribution_price,factory_price,distribution_price,factory_price,create_time,update_time,notes,main_image
         FROM product_info
         <where>
             <if test="productId != null">
@@ -54,15 +53,15 @@
         SELECT * FROM product_info WHERE product_id = #{id}
     </select>
 
-    <insert id="insertProductInfo" parameterType="com.dingtalk.model.ProductInfo">
+    <insert id="insertProductInfo" parameterType="com.dingtalk.model.ProductInfo" useGeneratedKeys="true" keyProperty="productId">
         INSERT INTO product_info (category_ids, product_code, product_name, model_number, voltage, power_kw, production,
                                   other_parameters, dimensions_mm,
                                   weight_kg, packaging_size_mm, total_weight_kg, dealer_price, distribution_price,
-                                  factory_price, create_time, update_time, notes,main_image,files)
+                                  factory_price, create_time, update_time, notes,main_image)
         VALUES (#{categoryIds}, #{productCode}, #{productName}, #{modelNumber}, #{voltage}, #{powerKw}, #{production},
                 #{otherParameters}, #{dimensionsMm},
                 #{weightKg}, #{packagingSizeMm}, #{totalWeightKg}, #{dealerPrice}, #{distributionPrice},
-                #{factoryPrice}, #{createTime}, #{updateTime}, #{notes},#{mainImage}, #{files})
+                #{factoryPrice}, #{createTime}, #{updateTime}, #{notes},#{mainImage})
     </insert>
 
     <update id="updateProductInfo" parameterType="com.dingtalk.model.ProductInfo">
@@ -85,8 +84,7 @@
             create_time        = #{createTime},
             update_time        = #{updateTime},
             notes              = #{notes},
-            main_image         = #{mainImage},
-            files              = #{files}
+            main_image         = #{mainImage}
         WHERE product_id = #{productId}
     </update>
 

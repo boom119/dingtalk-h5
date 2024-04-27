@@ -5,13 +5,9 @@
  */
 package com.dingtalk.controller;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.dingtalk.model.ProductCategory;
-import com.dingtalk.model.ProductInfo;
-import com.dingtalk.model.dto.ProductInfoQueryDTO;
 import com.dingtalk.service.ProductCategoryService;
 import com.dingtalk.util.ApiResponse;
-import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -9,5 +9,8 @@ public class ProductCategory {
     private String categoryId;
     private String categoryName;
     private String parentId;
+    private String path;
+
+
     private List<ProductCategory> children;
 }

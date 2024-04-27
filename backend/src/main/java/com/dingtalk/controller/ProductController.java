@@ -46,23 +46,25 @@ public class ProductController {
     }
 
     @PostMapping("/insertProductInfo")
-    public ApiResponse<Integer> insertProductInfo(@RequestBody ProductInfo productInfo) {
+    public ApiResponse<Object> insertProductInfo(@RequestBody ProductInfo productInfo) {
         if(checkProduct(productInfo)){
             return  ApiResponse.error(500,"产品名称或产品编号重复");
         }
-        return  ApiResponse.success(productInfoService.insertProductInfo(productInfo));
+        productInfoService.insertProductInfo(productInfo);
+        return  ApiResponse.success("ok");
     }
 
     @PostMapping("/updateProductInfo")
-    public ApiResponse<Integer> updateProductInfo(@RequestBody ProductInfo productInfo) {
+    public ApiResponse<Object> updateProductInfo(@RequestBody ProductInfo productInfo) {
         if(checkProduct(productInfo)){
             return  ApiResponse.error(501,"产品名称或产品编号重复");
         }
-        return  ApiResponse.success(productInfoService.updateProductInfo(productInfo));
+        productInfoService.updateProductInfo(productInfo);
+        return  ApiResponse.success("ok");
     }
 
     @PostMapping("/deleteByIds")
-    public ApiResponse<Integer> deleteByIds(@RequestBody Map<String, String> obj) {
+    public ApiResponse<Object> deleteByIds(@RequestBody Map<String, String> obj) {
         String idsCommaSeparated = obj.get("ids");
         List<Integer> idList = Arrays.stream(idsCommaSeparated.split(","))
                 .map(Integer::parseInt)
@@ -74,7 +76,8 @@ public class ProductController {
                 return  ApiResponse.error(502,"id为："+id+" 的产品不存在");
             }
         }
-        return ApiResponse.success(productInfoService.deleteById(idList));
+        productInfoService.deleteById(idList);
+        return ApiResponse.success("ok");
     }
 
     private boolean checkProduct(ProductInfo productInfo){

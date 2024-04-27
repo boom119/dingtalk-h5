@@ -15,8 +15,8 @@ public interface ProductInfoService {
 
     PageInfo<ProductInfo> selectProductInfoByPage(ProductInfoQueryDTO queryDTO) ;
     ProductInfo selectById(Integer id);
-    int insertProductInfo(ProductInfo productInfo);
-    int updateProductInfo(ProductInfo productInfo);
-    int deleteById(List<Integer> idList);
+    void insertProductInfo(ProductInfo productInfo);
+    void updateProductInfo(ProductInfo productInfo);
+    void deleteById(List<Integer> idList);
 
 }

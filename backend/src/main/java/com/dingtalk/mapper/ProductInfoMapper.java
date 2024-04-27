@@ -9,6 +9,7 @@ import com.dingtalk.model.ProductInfo;
 import com.dingtalk.model.dto.ProductInfoQueryDTO;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
