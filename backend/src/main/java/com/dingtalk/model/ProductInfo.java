@@ -34,6 +34,6 @@ public class ProductInfo {
     private String notes;
     private String mainImage;
     private String files;
-    private List<ProductCategory> productCategorieList;
+//    private List<ProductCategory> productCategorieList;
 
 }

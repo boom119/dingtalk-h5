@@ -35,7 +35,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         // 调用 Mapper 方法获取查询及结果
         Page<ProductInfo> productInfoPageInfo = productInfoMapper.selectProductInfoByPage(queryDTO);
         List<ProductInfo> productInfoList = productInfoPageInfo.getResult();
-        if (!ObjectUtil.hasNull(queryDTO.getCategoryIds())) {
+        /*if (!ObjectUtil.hasNull(queryDTO.getCategoryIds())) {
             Set<String> queryCategoryIdsSet = new HashSet<>(queryDTO.getCategoryIds());
             // 筛选出包含参数中任一categoryId的ProductInfo列表
             productInfoList = productInfoList.stream()
@@ -47,7 +47,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
                     })
                     .collect(Collectors.toList());
         }
-        productInfoList = productUpdateCategory(productInfoList);
+        productInfoList = productUpdateCategory(productInfoList);*/
 
         // 返回分页对象，需确保PageInfo中可以接受List<ProductInfo>作为参数
         return new PageInfo<>(productInfoList);
@@ -55,10 +55,11 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Override
     public ProductInfo selectById(Integer id) {
+
         ProductInfo productInfo = productInfoMapper.selectById(id);
-        if(!ObjectUtil.isEmpty(productInfo)){
-            productInfo = productUpdateCategory(productInfo);
-        }
+//        if(!ObjectUtil.isEmpty(productInfo)){
+//            productInfo = productUpdateCategory(productInfo);
+//        }
         return productInfo;
     }
 
@@ -76,11 +77,11 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
-    public int deleteById(Integer id) {
-        return productInfoMapper.deleteById(id);
+    public int deleteById(List<Integer> idList) {
+        return productInfoMapper.deleteByIds(idList);
     }
 
-    private List<ProductInfo> productUpdateCategory(List<ProductInfo> productInfoList) {
+    /*private List<ProductInfo> productUpdateCategory(List<ProductInfo> productInfoList) {
         // 所有产品的类别ID集合
         List<ProductCategory> categoryList = categoryMapper.selectAll();
 
@@ -97,9 +98,9 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             productInfo.setProductCategorieList(productCategories);
         });
         return productInfoList;
-    }
+    }*/
 
-    private ProductInfo productUpdateCategory(ProductInfo productInfo) {
+   /* private ProductInfo productUpdateCategory(ProductInfo productInfo) {
         // 所有产品的类别ID集合
         List<ProductCategory> categoryList = categoryMapper.selectAll();
 
@@ -115,7 +116,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productInfo.setProductCategorieList(productCategories);
 
         return productInfo;
-    }
+    }*/
 
 
 }

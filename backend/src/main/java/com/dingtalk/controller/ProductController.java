@@ -10,9 +10,18 @@ import com.dingtalk.model.ProductInfo;
 import com.dingtalk.model.dto.ProductInfoQueryDTO;
 import com.dingtalk.service.ProductInfoService;
 import com.dingtalk.util.ApiResponse;
+import com.dingtalk.util.ExcelExporter;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/product")
@@ -52,13 +61,20 @@ public class ProductController {
         return  ApiResponse.success(productInfoService.updateProductInfo(productInfo));
     }
 
-    @PostMapping("/deleteById")
-    public ApiResponse<Object> deleteById(@RequestParam(name = "id") Integer id) {
-        ProductInfo productInfo = productInfoService.selectById(id);
-        if(ObjectUtil.isEmpty(productInfo)){
-            return  ApiResponse.error(502,"产品id不存在");
+    @PostMapping("/deleteByIds")
+    public ApiResponse<Integer> deleteByIds(@RequestBody Map<String, String> obj) {
+        String idsCommaSeparated = obj.get("ids");
+        List<Integer> idList = Arrays.stream(idsCommaSeparated.split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        ProductInfo productInfo = new ProductInfo();
+        for(Integer id : idList){
+            productInfo =  productInfoService.selectById(id);
+            if(ObjectUtil.isEmpty(productInfo)){
+                return  ApiResponse.error(502,"id为："+id+" 的产品不存在");
+            }
         }
-        return ApiResponse.success(productInfoService.deleteById(id));
+        return ApiResponse.success(productInfoService.deleteById(idList));
     }
 
     private boolean checkProduct(ProductInfo productInfo){
@@ -72,5 +88,18 @@ public class ProductController {
             }
         }
         return false;
+    }
+
+    @GetMapping("/export")
+    public void exportById(@RequestParam(name = "id") Integer id, HttpServletResponse response) {
+        ProductInfo productInfo = productInfoService.selectById(id);
+        List<ProductInfo> productInfoList = new ArrayList<>();
+        productInfoList.add(productInfo);
+        try {
+            ExcelExporter.exportProducts(productInfoList,"test.xlsx",response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

@@ -16,5 +16,5 @@ public class ProductInfoQueryDTO {
     private String productCode;
     private String productName;
     private Page page;
-    private List<String> categoryIds;
+    private String categoryId;
 }

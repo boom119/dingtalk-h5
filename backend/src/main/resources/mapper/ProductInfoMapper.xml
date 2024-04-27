@@ -12,8 +12,8 @@
         <result column="power_kw" property="powerKw" />
         <result column="production" property="production" />
         <result column="other_parameters" property="otherParameters" />
-        <result column="dimensions_mm" property="otherParameters" />
-        <result column="weight_kg" property="otherParameters" />
+        <result column="dimensions_mm" property="dimensionsMm" />
+        <result column="weight_kg" property="weightKg" />
         <result column="packaging_size_mm" property="packagingSizeMm" />
         <result column="total_weight_kg" property="totalWeightKg" />
         <result column="dealer_price" property="dealerPrice" />
@@ -37,52 +37,65 @@
             <if test="productId != null">
                 AND product_id = #{productId}
             </if>
-            <if test="productCode != null">
-                OR product_code = #{productCode}
+            <if test="productCode != null and productCode != ''">
+                OR product_code LIKE CONCAT('%', #{productCode}, '%')
             </if>
-            <if test="productName != null">
-                OR product_name = #{productName}
+            <if test="productName != null and productName != ''">
+                OR product_name LIKE CONCAT('%', #{productName}, '%')
             </if>
-
+            <if test="categoryId != null and categoryId != ''">
+                OR FIND_IN_SET(#{categoryId}, category_ids)
+            </if>
         </where>
     </select>
+
 
     <select id="selectById" resultMap="productInfoMap">
         SELECT * FROM product_info WHERE product_id = #{id}
     </select>
 
     <insert id="insertProductInfo" parameterType="com.dingtalk.model.ProductInfo">
-        INSERT INTO product_info (category_ids,product_code,product_name,model_number,voltage,power_kw,production,other_parameters,dimensions_mm,
-                                  weight_kg,packaging_size_mm,total_weight_kg,dealer_price,distribution_price,factory_price,create_time,update_time,notes)
-        VALUES (#{categoryIds}, #{productCode}, #{productName},#{modelNumber},#{voltage},#{powerKw},#{production},#{otherParameters},#{dimensionsMm},
-                #{weightKg},#{packagingSizeMm},#{totalWeightKg},#{dealerPrice},#{distributionPrice},#{factoryPrice},#{createTime},#{updateTime},#{notes})
+        INSERT INTO product_info (category_ids, product_code, product_name, model_number, voltage, power_kw, production,
+                                  other_parameters, dimensions_mm,
+                                  weight_kg, packaging_size_mm, total_weight_kg, dealer_price, distribution_price,
+                                  factory_price, create_time, update_time, notes,main_image,files)
+        VALUES (#{categoryIds}, #{productCode}, #{productName}, #{modelNumber}, #{voltage}, #{powerKw}, #{production},
+                #{otherParameters}, #{dimensionsMm},
+                #{weightKg}, #{packagingSizeMm}, #{totalWeightKg}, #{dealerPrice}, #{distributionPrice},
+                #{factoryPrice}, #{createTime}, #{updateTime}, #{notes},#{mainImage}, #{files})
     </insert>
 
     <update id="updateProductInfo" parameterType="com.dingtalk.model.ProductInfo">
-        UPDATE product_info SET
-        category_ids = #{categoryIds},
-        product_code = #{productCode},
-        product_name = #{productName},
-        model_number = #{modelNumber},
-        voltage = #{voltage},
-        power_kw = #{powerKw},
-        production = #{production},
-        other_parameters = #{otherParameters},
-        dimensions_mm = #{dimensionsMm},
-        weight_kg = #{weightKg},
-        packaging_size_mm = #{packagingSizeMm},
-        total_weight_kg = #{totalWeightKg},
-        dealer_price = #{dealerPrice},
-        distribution_price = #{distributionPrice},
-        factory_price = #{factoryPrice},
-        create_time = #{createTime},
-        update_time = #{updateTime},
-        notes = #{notes}
+        UPDATE product_info
+        SET category_ids       = #{categoryIds},
+            product_code       = #{productCode},
+            product_name       = #{productName},
+            model_number       = #{modelNumber},
+            voltage            = #{voltage},
+            power_kw           = #{powerKw},
+            production         = #{production},
+            other_parameters   = #{otherParameters},
+            dimensions_mm      = #{dimensionsMm},
+            weight_kg          = #{weightKg},
+            packaging_size_mm  = #{packagingSizeMm},
+            total_weight_kg    = #{totalWeightKg},
+            dealer_price       = #{dealerPrice},
+            distribution_price = #{distributionPrice},
+            factory_price      = #{factoryPrice},
+            create_time        = #{createTime},
+            update_time        = #{updateTime},
+            notes              = #{notes},
+            main_image         = #{mainImage},
+            files              = #{files}
         WHERE product_id = #{productId}
     </update>
 
-    <delete id="deleteById">
-        DELETE FROM product_info WHERE product_id = #{id}
+    <delete id="deleteByIds">
+        DELETE FROM product_info WHERE product_id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
+
 
 </mapper>

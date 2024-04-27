@@ -19,6 +19,6 @@ public interface ProductInfoMapper {
     ProductInfo selectById(Integer id);
     int insertProductInfo(ProductInfo productInfo);
     int updateProductInfo(ProductInfo productInfo);
-    int deleteById(Integer id);
+    int deleteByIds(List<Integer> idList);
 
 }

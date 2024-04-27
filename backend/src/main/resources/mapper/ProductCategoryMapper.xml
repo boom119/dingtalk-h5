@@ -6,11 +6,14 @@
         <result column="category_id" property="categoryId" />
         <result column="category_name" property="categoryName" />
         <result column="parent_id" property="parentId" />
-        <result column="level" property="level" />
     </resultMap>
 
     <select id="selectAll" resultMap="productCategoryMap">
         SELECT * FROM product_category
+    </select>
+
+    <select id="selectByNameAndParent" resultMap="productCategoryMap">
+        SELECT * FROM product_category WHERE category_name = #{categoryName} and parent_id = #{parentId}
     </select>
 
     <select id="selectById" resultMap="productCategoryMap">
@@ -26,16 +29,14 @@
     </select>
 
     <insert id="insertProductCategory" parameterType="com.dingtalk.model.ProductCategory">
-        INSERT INTO product_category (category_id, category_name, parent_id,level)
-        VALUES (#{categoryId}, #{categoryName}, #{parentId},#{level})
+        INSERT INTO product_category ( category_name, parent_id)
+        VALUES (#{categoryName}, #{parentId})
     </insert>
 
     <update id="updateProductCategory" parameterType="com.dingtalk.model.ProductCategory">
         UPDATE product_category SET
-        category_id = #{categoryId},
         category_name = #{categoryName},
-        parent_id = #{parentId},
-        level = #{level}
+        parent_id = #{parentId}
         WHERE category_id = #{categoryId}
     </update>
 

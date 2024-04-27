@@ -14,4 +14,10 @@ public interface ProductCategoryService {
      * 根据Id查询类型
      */
      ProductCategory selectCategoryById(String Id);
+
+    List<ProductCategory> getAll();
+
+    int insertProductCategory(ProductCategory productInfo);
+    int updateProductCategory(ProductCategory productInfo);
+    int deleteById(String categoryId);
 }

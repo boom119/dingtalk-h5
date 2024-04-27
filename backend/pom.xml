@@ -80,6 +80,18 @@
             <version>8.0.23</version> <!-- 使用与你的MySQL服务器兼容的版本 -->
         </dependency>
 
+        <!-- Apache POI dependencies for Excel -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.taobao.top</groupId>

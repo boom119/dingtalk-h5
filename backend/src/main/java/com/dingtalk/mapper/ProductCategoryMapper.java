@@ -13,9 +13,10 @@ public interface ProductCategoryMapper {
 
     ProductCategory selectById(String categoryId);
     List<ProductCategory> selectByIds(String categoryIds);
+    List<ProductCategory> selectByNameAndParent(ProductCategory productInfo);
     List<ProductCategory> selectAll();
     List<ProductCategory> selectByParentId(String parentId);
     int insertProductCategory(ProductCategory productInfo);
     int updateProductCategory(ProductCategory productInfo);
-    int deleteById(Integer categoryId);
+    int deleteById(String categoryId);
 }
